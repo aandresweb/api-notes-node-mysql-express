@@ -1,6 +1,7 @@
 import express from "express";
 import notesRoutes from "./routes/notes.routes.js";
-
+import "./config.js";
+import { PORT } from "./config.js";
 const app = express();
 
 app.use(express.json());
@@ -11,4 +12,6 @@ app.use((req, res, next) => {
   });
 });
 
-app.listen(3000);
+app.listen(PORT);
+
+console.log("SERVER RUNNING ON PORT " + PORT);
