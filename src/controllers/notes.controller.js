@@ -19,15 +19,39 @@ export const getNote = async (req, res) => {
 
 export const createNote = async (req, res) => {
   const { note, active } = req.body;
-  const [rows] = await pool.query(
+  const [insertRowResponse] = await pool.query(
     "INSERT INTO notes (note, active) VALUES (?, ?)",
     [note, active]
   );
-  res.send({ rows });
+
+  const [findRowResponse] = await pool.query(
+    "SELECT * FROM notes WHERE id = ?",
+    [insertRowResponse.insertId]
+  );
+
+  res.send(findRowResponse);
 };
 
-export const updateNote = (req, res) => {
-  res.send("Update notes");
+export const updateNote = async (req, res) => {
+  const { id } = req.params;
+  const { note, active } = req.body;
+  const [response] = await pool.query(
+    "UPDATE notes SET note = IFNULL(?, note), active = IFNULL(?, active) WHERE id = ?",
+    [note, active, id]
+  );
+
+  if (response.affectedRows <= 0) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
+  const [updatedRowResponse] = await pool.query(
+    "SELECT * FROM notes WHERE id = ?",
+    [id]
+  );
+
+  res.send(updatedRowResponse);
 };
 
 export const deleteNote = async (req, res) => {
