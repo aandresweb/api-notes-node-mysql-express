@@ -11,6 +11,8 @@ GET NOTES (GET): https://api-notes-node-mysql-express-production.up.railway.app/
 
 GET NOTE (GET): https://api-notes-node-mysql-express-production.up.railway.app/api/notes/:id
 
+CREATE NOTE (POST): https://api-notes-node-mysql-express-production.up.railway.app/api/notes
+
 UPDATE NOTE (PATCH): https://api-notes-node-mysql-express-production.up.railway.app/api/notes/:id
 
 DELETE NOTE (DELETE): https://api-notes-node-mysql-express-production.up.railway.app/api/notes/:id
